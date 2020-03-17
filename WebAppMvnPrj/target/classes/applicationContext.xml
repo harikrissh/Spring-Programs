@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+
+							
+						<!--This XML File is managed by IoC(Inversion of Control) Container -->
+
+ 	<context:annotation-config/>
+	<context:component-scan base-package="springprograms"></context:component-scan>
+	<context:property-placeholder location="classpath:carprops.properties"/>
+
+	
+	<bean id="car" class="springprograms.Car">
+		<property name="carName"  value="Roadster"/>
+		<property name="model" value="Tesla"/>
+	</bean>
+	
+	<bean id="addr" class="springprograms.Address">
+		<constructor-arg value="Chennai"/>
+		<constructor-arg value="India"/>
+	</bean>
+	<!-- constructor injection using ref tag -->
+	<bean id="emp" class="springprograms.Employee">
+		<constructor-arg value="45216"/>
+		<constructor-arg value="Hari"/>
+		<constructor-arg ref="addr"/>
+	</bean>
+	
+	
+	<!-- Autowiring constructor dependency
+		No need of ref tag
+	 -->
+	<bean id="address" class="springprograms.Address">
+		<constructor-arg value="Bangalore"/>
+		<constructor-arg value="India"/>
+	</bean>
+	<bean id="emp2" class="springprograms.Employee" autowire="constructor">
+		<constructor-arg value="78451"/>
+		<constructor-arg value="Yuvan"/>
+	</bean>
+	
+	<bean id="student" class="springprograms.Student">
+		<property name="sNo" value="789"/>
+		<property name="sName" value="Cj"/>
+	</bean>
+	
+	<bean id="course" class="springprograms.Course" parent="student">
+		<property name="cId" value="1001"/>
+		<property name="cName" value="Spring Framework"/>
+	</bean>
+	
+	<bean id="car3" class="springprograms.Car">
+		<property name="carName"  value="${c1}"/>
+		<property name="model" value="${m1}"/>
+	</bean>
+	
+	<!-- Collection Setter Injection -->
+	<bean id="vencus" class="springprograms.VenCus">
+		<property name="vId" value="100"/>
+		<property name="vName" value="BLT"/>
+		<property name="customers">
+			<set>
+				<value>cts</value>
+				<value>tcs</value>
+				<value>infy</value>
+				<value>zoho</value>
+			</set>
+		</property>
+	</bean>
+	
+	<!-- list of technologies -->
+	<bean id="tech1" class="springprograms.Technology">
+		<property name="technology" value="Java"/>
+		<property name="duration" value="4 months"/>
+	</bean>
+	
+	<bean id="tech2" class="springprograms.Technology">
+		<property name="technology" value="Python"/>
+		<property name="duration" value="3 months"/>
+	</bean>
+	<!-- Collection dependency setter injection using ref tag -->
+	<bean id="training" class="springprograms.Training">
+		<property name="batchNo" value="2"/>
+		<property name="batchName" value="Developer"/>
+		<property name="tech">
+			<list>
+				<ref bean="tech1"/>
+				<ref bean="tech2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="carmap" class="springprograms.CarUsingMap">
+		<property name="mileages">
+			<list>
+				<value>60</value>
+				<value>55</value>
+				<value>45</value>
+			</list>
+		</property>
+		<property name="cars">
+			<map>
+				<entry key="${m1}" value="${c1}"/>
+				<entry key="${m2}" value="${c2}"/>
+				<entry key="${m3}" value="${c3}"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="vencus2" class="springprograms.VenCus2">
+		<constructor-arg value="BLT"/>
+		<constructor-arg>
+			<list>
+				<value>cts</value>
+				<value>tcs</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+</beans>
